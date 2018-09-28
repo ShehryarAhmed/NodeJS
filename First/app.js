@@ -37,13 +37,28 @@ const fs = require('fs');
 
 const EventEmitter = require('events');
 const emitter = new EventEmitter();
+
 //Register a listner
-emitter.on('messageLogged',function(){
-    console.log('Listner Called ')
+// emitter.on('messageLogged',function(eventArg){
+//     console.log('Listner Called ',eventArg);
+// });
+
+//using arrow function
+emitter.on('logging',(eventArg)=>{
+    console.log('Listner Called ',eventArg);
 });
 
-//Raise an event
-emitter.emit('messageLogged');
+
+const Logs = require('./Log');
+const logs = new Logs();
+
+// using arrow function
+logs.on('logging',(eventArg)=>{
+    console.log('Listner Called ',eventArg);
+});
+
+logs.logd('message')
+
 
 
 
