@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "config": "^2.0.1",
+    "debug": "^4.1.0",
     "express": "^4.16.3",
     "helmet": "^3.14.0",
     "joi": "^13.7.0",

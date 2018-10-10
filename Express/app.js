@@ -13,12 +13,15 @@
 //     }
 //     server.listen(3000)
 // })
-const config = require('config');
+const appStartUpDebuger = require('debug')('app:StartUp');
+const dbDebuger = require('debug')('app:db');
+
 const morgan = require('morgan');
 const helmet = require('helmet');
 const Joi = require('joi');
 const Logger = require('./logger');
 const express = require('express');
+const config = require('config');
 
 const app = express();
 
@@ -34,7 +37,6 @@ app.use(helmet());
 console.log('Application Name '+config.get('name'))
 console.log('Mail server Name '+config.get('mail.host'))
 // console.log('Mail server Password '+config.get('mail.password'))
-
 // console.log('Application Name '+config.get('name'))
 
 
@@ -42,9 +44,11 @@ console.log('Mail server Name '+config.get('mail.host'))
 
 if(app.get('env') === 'development'){
     app.use(morgan('tiny'))
-    console.log('Morgan enabled...')
+    appStartUpDebuger('Morgan enabled...')
 }
 
+//ForDebuger
+    dbDebuger('Connected Database...')
 // console.log(`Node Env : ${process.env.NODE_ENV}`);
 // console.log(`app get : ${app.get('env')}`);
 
