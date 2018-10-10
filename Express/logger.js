@@ -8,4 +8,4 @@ function Auth(req, res, next){
     next();
 }
 module.exports = log;
-module.exports = Auth;
+// module.exports = Auth;

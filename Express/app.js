@@ -13,16 +13,48 @@
 //     }
 //     server.listen(3000)
 // })
-
+const config = require('config');
+const morgan = require('morgan');
+const helmet = require('helmet');
 const Joi = require('joi');
 const Logger = require('./logger');
 const express = require('express');
+
 const app = express();
 
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
+
 app.use(express.static('public'));
+app.use(helmet());
+// app.use(morgan('tiny'));
+
+//for configuration
+console.log('Application Name '+config.get('name'))
+console.log('Mail server Name '+config.get('mail.host'))
+// console.log('Mail server Password '+config.get('mail.password'))
+
+// console.log('Application Name '+config.get('name'))
+
+
+
+
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny'))
+    console.log('Morgan enabled...')
+}
+
+// console.log(`Node Env : ${process.env.NODE_ENV}`);
+// console.log(`app get : ${app.get('env')}`);
+
+// //create and write stream file
+// var accessLogStream = fs.createWriteStream(
+//     path.join(__dirname, 'access.log'), {flags: 'a'}
+// );
+// // setup the logger 
+// app.use(morgan('combined', {stream: accessLogStream}));
+
 
 app.use(Logger)
 // app.use(Logger)
