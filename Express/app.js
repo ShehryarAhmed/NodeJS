@@ -15,10 +15,17 @@
 // })
 
 const Joi = require('joi');
+const Logger = require('./logger');
 const express = require('express');
 const app = express();
 
+
 app.use(express.json());
+app.use(express.urlencoded({extended : true}));
+app.use(express.static('public'));
+
+app.use(Logger)
+// app.use(Logger)
 
 const courses =[
     {id:1,name:'Course1'},
@@ -93,11 +100,28 @@ app.put('/api/courses/:id',(req, res) =>{
     //Update course
     course.name = req.body.name
     //Return the updated course
-    res.send(course)
-
-    
+    res.send(course)    
 });
 
+app.delete('/api/courses/:id',(req, res) =>{
+
+     //lookup the course
+    //if not existing return 404
+    var course = courses.find(c => c.id === parseInt(req.params.id));
+    console.log("test",course)
+    if(!course){
+        res.status(404).send(`The Courses with the given ID ${req.params.id} was not found`);
+        return;
+    }
+
+    //delete
+   const index = courses.indexOf(course);
+   courses.splice(index,1);
+
+   //response
+    res.send(course)    
+
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`))
