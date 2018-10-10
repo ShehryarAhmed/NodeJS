@@ -25,6 +25,9 @@ const config = require('config');
 
 const app = express();
 
+app.set('view engine','pug')
+app.set('views','./views')
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
@@ -69,7 +72,8 @@ const courses =[
     {id:3,name:'Course3'}
 ]
 app.get('/',(req,res) => {
-    res.send('Hello World!!!')
+    // res.send('Hello World!!!')
+    res.render('index', {title:'My Express App', message:'Hello'})
 })
 
 app.get('/api/courses',(req,res) => {

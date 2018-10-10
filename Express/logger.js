@@ -1,6 +1,6 @@
 function  log(req, res, next){
     console.log('Authenticating...')
-    // next();
+    next();
 }
 
 function Auth(req, res, next){
