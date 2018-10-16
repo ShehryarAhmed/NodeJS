@@ -4,7 +4,7 @@ function  log(req, res, next){
 }
 
 function Auth(req, res, next){
-    console.log('Logging...')
+    console.log(' ...')
     next();
 }
 module.exports = log;
