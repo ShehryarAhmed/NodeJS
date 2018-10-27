@@ -18,8 +18,8 @@ const Course = mongoose.model('Course',courseSchema);
 async function createCourses(){
 
     const course = new Course({
-        name:'Node.js Courses',
-        author:'shehryarAhmed',
+        name:'Math Courses',
+        author:'Taha Ahmed',
         tags: ['node', 'backend'] ,
         isPublished:false
     });
@@ -56,11 +56,17 @@ async function getCourses(){
 
 
     // find({author:"shehryarAhmed", isPublished: true})
-        find()
-        .and([{author:"shehryarAhmed"}, {isPublished: false}])
-        .limit(10)
-        .sort({name:1})
-        .select({name:1});
+    // find({author: /.*SHEHRYAR.*/i})
+    // find({author: /SHEHRYAR&/i})
+    find({author: /^SHEHRYAR/i})
+    
+    
+        // find({author: /^ahmed/i})
+        // .and([{author:"shehryarAhmed"}, {isPublished: false}])
+        // .limit(10)
+        // .sort({name:1})
+        // .select({name:1});
+        .count()
     console.log(course)
 }
 
