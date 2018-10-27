@@ -44,6 +44,10 @@ async function createCourses(){
 // and
 
 async function getCourses(){
+
+    const pageNumber = 2;
+    const pageSize = 1;
+
     const course = await Course.
     // find({author:"shehryarAhmed", isPublished: true})
     // find({price: 10})
@@ -58,7 +62,7 @@ async function getCourses(){
     // find({author:"shehryarAhmed", isPublished: true})
     // find({author: /.*SHEHRYAR.*/i})
     // find({author: /SHEHRYAR&/i})
-    find({author: /^SHEHRYAR/i})
+    // find({author: /^SHEHRYAR/i})
     
     
         // find({author: /^ahmed/i})
@@ -66,7 +70,10 @@ async function getCourses(){
         // .limit(10)
         // .sort({name:1})
         // .select({name:1});
-        .count()
+        find()
+        .skip((pageNumber -1)*pageSize)
+        .limit(pageSize)
+        
     console.log(course)
 }
 
