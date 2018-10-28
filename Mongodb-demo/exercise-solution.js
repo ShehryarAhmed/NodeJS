@@ -101,4 +101,14 @@ async function updateCoursesUpdateFirst(dd){
  }
 
 
- updateCoursesUpdateFirst('5a68fdd7bee8ea64649c2777')
+//  updateCoursesUpdateFirst('5a68fdd7bee8ea64649c2777')
+
+//remove document
+
+async function removeDocument(id){
+    // const result = await Course.deleteOne({ _id: id});
+    const courses = await Course.findByIdAndRemove(id)
+    console.log(courses)
+}
+
+removeDocument('5a68fdd7bee8ea64649c2777')
