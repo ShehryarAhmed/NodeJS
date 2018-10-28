@@ -46,7 +46,7 @@ async function updateCourses(dd){
     console.log(course,"gfsg")
     if(!course) return;
 
-    course.isPublished = true;
+    course.isPublished = false;
     course.author = 'Another Author';
 
     // both are identical way to update data
@@ -75,4 +75,30 @@ async function getCoursesByID(){
 }
 // runUpdate('5a68fdd7bee8ea64649c2777');
 // run();
-getCoursesByID();
+// getCoursesByID();
+
+
+
+
+
+
+//update first
+async function updateCoursesUpdateFirst(dd){
+    
+    const result = await Course.findByIdAndUpdate(dd,
+        {$set: { author : 'Fakhir',  isPublished: false }},
+        {new : 1}
+    );
+
+    // both are identical way to update data
+    // course.set({
+    //     isPublished: true,
+    //     author:'Another Author'
+    // })
+
+    // return await course.save();
+    console.log(result)
+ }
+
+
+ updateCoursesUpdateFirst('5a68fdd7bee8ea64649c2777')
