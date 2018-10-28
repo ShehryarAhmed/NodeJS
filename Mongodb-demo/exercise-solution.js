@@ -5,12 +5,14 @@ mongoose.connect('mongodb://localhost/mongo-exercises')
     .catch(err => console.error('Cloud not Connected to MongoDB...',err))
 
 const courseSchema = new mongoose.Schema({
+        _id : String,
         name: String,
         author: String,
         tags: [ String ],
         date: {type: Date, default: Date.now},
         isPublished: Boolean,
-        price: Number
+        price: Number,
+        __v: Number
     })    
 const Course = mongoose.model('Course',courseSchema);
     
@@ -61,5 +63,16 @@ async function updateCourses(dd){
     const update = await updateCourses(id);
     console.log(update)
 }
-runUpdate('5a68ff090c553064a218a547');
+async function getCoursesByID(){
+    
+    const course = await Course
+    // .findById('5a68fdf95db93f6477053ddd')
+    .find({ __v : 0})
+    .count()
+    console.log(course)
+
+    
+}
+// runUpdate('5a68fdd7bee8ea64649c2777');
 // run();
+getCoursesByID();
