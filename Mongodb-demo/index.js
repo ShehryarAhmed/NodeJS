@@ -5,11 +5,26 @@ mongoose.connect('mongodb://localhost/Bismillah')
     .catch(err => console.error('Cloud not Connected to MongoDB...',err))
 
 const courseSchema = new mongoose.Schema({
-    name: String,
+    // name: String ,
+    name: {
+        type: String,
+        required:true,
+        minlength:5,
+        maxlength:255,
+        // match:/pattren/
+    },    
+    category:{
+        type: String, 
+        required: true,
+        enum: ['web','mobile','network']
+    },
     author: String,
     tags: [ String ],
     date: {type: Date, default: Date.now},
-    isPublished: Boolean
+    isPublished: Boolean,
+    // price: Number
+    price: {type: Number,
+            required: function(){ return this.isPublished;}}
 })    
 
 const Course = mongoose.model('Course',courseSchema);
@@ -19,13 +34,24 @@ async function createCourses(){
 
     const course = new Course({
         name:'Math Courses',
+        category:'web',
         author:'Taha Ahmed',
-        tags: ['node', 'backend'] ,
-        isPublished:false
+        tags: ['node1', 'backend2','node3', 'backend4'] ,
+        isPublished:false,
+        // price:1200
     });
-    const result = await course.save();
-    console.log(result)
-
+    try{
+        const isValid = await course.validate();
+        if(isValid){
+            console.log('result')
+        }else{
+            console.log('else')
+        }
+        const result = await course.save();
+        // console.log(result,'result')
+    }catch(ex){
+        console.log(ex.message,'message');
+    }
 }
 
 //Equal opreater
@@ -77,5 +103,5 @@ async function getCourses(){
     console.log(course)
 }
 
-// createCourses();
-getCourses();
+createCourses();
+// getCourses();
