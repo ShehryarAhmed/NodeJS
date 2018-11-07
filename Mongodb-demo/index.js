@@ -16,7 +16,10 @@ const courseSchema = new mongoose.Schema({
     category:{
         type: String, 
         required: true,
-        enum: ['web','mobile','network']
+        enum: ['web','mobile','network'],
+        lowercase: true,
+        // uppercase: true,
+        trim:true
     },
     author: String,
     // tags: [ String ],
@@ -37,9 +40,15 @@ const courseSchema = new mongoose.Schema({
     date: {type: Date, default: Date.now},
     isPublished: Boolean,
     // price: Number
-    price: {type: Number,
-            required: function(){ return this.isPublished;}}
-})    
+    price: {
+            type: Number,
+            required: function(){ return this.isPublished;},
+            min:10,
+            max:200,
+            get : v => Math.round(v),
+            set : v => Math.round(v)            
+        }
+});
 
 const Course = mongoose.model('Course',courseSchema);
 
@@ -48,12 +57,12 @@ async function createCourses(){
 
     const course = new Course({
         name:'Math Courses',
-        category:'-',
+        category:'Mobile',
         author:'Taha Ahmed',
-        tags:null,
+        tags:['back end'],
         // tags: ['node1', 'backend2','node3', 'backend4'] ,
-        isPublished:false,
-        // price:1200
+        isPublished:true,
+        price:1200
     });
     try{
         const isValid = await course.validate();
@@ -115,11 +124,13 @@ async function getCourses(){
         // .sort({name:1})
         // .select({name:1});
         find()
-        .skip((pageNumber -1)*pageSize)
-        .limit(pageSize)
+        // .skip((pageNumber -1)*pageSize)
+        // .limit(pageSize)
         
     console.log(course)
 }
 
-createCourses();
+// createCourses();
+
+//get courses
 // getCourses();

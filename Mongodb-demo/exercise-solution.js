@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/mongo-exercises')
-    .then(() => { console.log('Connected to MongoDB...')})
-    .catch(err => console.error('Cloud not Connected to MongoDB...',err))
+    mongoose.connect('mongodb://localhost/mongo-exercises')
+        .then(() => { console.log('Connected to MongoDB...')})
+        .catch(err => console.errord('Cloud not Connected to MongoDB...',err))
 
 const courseSchema = new mongoose.Schema({
         _id : String,
