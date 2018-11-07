@@ -23,8 +23,13 @@ const courseSchema = new mongoose.Schema({
     tags: {
         type: Array,
         validate: {
-            validator: function(v){
-                return v && v.length > 0;
+            isAsync : true,
+            validator: function(v, callback){
+                setTimeout(() =>{
+                    const  result =  v && v.length > 0;
+                    callback(result)
+                },3000)
+                // return v && v.length > 0;
             },
             message : 'A Course Should have at least one tag.'
         }
@@ -43,7 +48,7 @@ async function createCourses(){
 
     const course = new Course({
         name:'Math Courses',
-        category:'web',
+        category:'-',
         author:'Taha Ahmed',
         tags:null,
         // tags: ['node1', 'backend2','node3', 'backend4'] ,
@@ -59,8 +64,11 @@ async function createCourses(){
         }
         const result = await course.save();
         // console.log(result,'result')
-    }catch(ex){
-        console.log(ex.message,'message');
+    }
+    catch(ex){
+        for(field in ex.errors){
+            console.log('error',ex.errors[field].message)
+        }
     }
 }
 
