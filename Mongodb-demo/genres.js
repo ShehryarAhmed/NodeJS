@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 
-    const error  = ValidateGenre(req.body);
+    const {error}  = ValidateGenre(req.body);
     console.log("hello",error)
     if(error) return res.status(400).send(error.details[0].message);
     
