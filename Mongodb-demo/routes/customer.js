@@ -1,29 +1,8 @@
-const Joi = require('joi');
+
+const {Customer, validate} = require('../model/customer')
 const mongoose = require('mongoose');
 const express = require('express'); 
 const router = express.Router();
-
-
-
-const customerSchema = new mongoose.Schema({
-    // name: String ,
-    name: {
-        type: String,
-        required:true,
-        minlength:5,
-        maxlength:50
-    },
-    isGold : {
-        type: Boolean,
-        default: false
-    },
-    phone : {
-        type : String,
-        required: true
-    }
-});
-
-const Customer =  mongoose.model('Customer',customerSchema);
 
 router.get('/', async (req, res) => {
     const customer = await Customer.find().sort('name');
@@ -43,7 +22,7 @@ router.post('/', async (req, res) => {
 
 
 router.put('/:id', async (req, res) => {
-    const {error}  = ValidateCustomer(req.body);
+    const {error}  = validate(req.body);
     console.log("hello",error)
     if(error) return res.status(400).send(error.details[0].message);
     
@@ -75,15 +54,15 @@ router.get('/:id', async (req, res) => {
     res.send(customer);
 })
 
-function ValidateCustomer(genre){
-    const Schema = {
-        //minimum to five character and maximum to fifty character
-        name: Joi.string().min(5).max(50).required(),
-        phone: Joi.string().min(5).max(50).required(),
-        isGolde : Joi.boolean()
-    };
-    return Joi.validate(genre,Schema)
-}
+// function ValidateCustomer(genre){
+//     const Schema = {
+//         //minimum to five character and maximum to fifty character
+//         name: Joi.string().min(5).max(50).required(),
+//         phone: Joi.string().min(5).max(50).required(),
+//         isGolde : Joi.boolean()
+//     };
+//     return Joi.validate(genre,Schema)
+// }
 
 module.exports = router;
 
